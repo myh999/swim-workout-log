@@ -4,10 +4,16 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@import "./App.scss";
+@import "./components/index.scss";
+@import "./containers/index.scss";
+@import "./routes/index.scss";
+@import "~bootstrap/scss/bootstrap.scss";

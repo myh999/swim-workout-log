@@ -1,0 +1,21 @@
+#login-parent {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+}
+
+#login-button-container {
+  margin: auto;
+  width: 50%;
+  height: 25%;
+  border: solid 1px black;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  div {
+    margin: auto;
+  }
+}
