@@ -1,5 +1,4 @@
 import React from "react";
-import "./sass/App.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./routes/Login";
 

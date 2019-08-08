@@ -12,8 +12,8 @@ code {
     monospace;
 }
 
-@import "./App.scss";
-@import "./components/index.scss";
-@import "./containers/index.scss";
-@import "./routes/index.scss";
+@import "./_App.scss";
+@import "./components/all.scss";
+@import "./containers/all.scss";
+@import "./views/all.scss";
 @import "~bootstrap/scss/bootstrap.scss";
