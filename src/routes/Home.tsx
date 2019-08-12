@@ -15,11 +15,11 @@ class Home extends Component<any, IHomeStates> {
     );
   }
 
-  private signOut() {
+  private signOut = () => {
     Auth.signOut().then(() => {
       this.props.history.push("/");
     });
-  }
+  };
 }
 
 export default Home;

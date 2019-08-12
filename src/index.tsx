@@ -3,10 +3,6 @@ import ReactDOM from "react-dom";
 import "./sass/_index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import firebase from "firebase/app";
-import "firebase/auth";
-
-firebase.initializeApp({});
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
