@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import Auth from "../services/Auth";
 import { LoginType } from "../constants/enums";
 import LoginModal from "../containers/LoginModal";
 
@@ -29,7 +28,15 @@ class Login extends Component<any, ILoginStates> {
               </Button>
             </div>
             <div className="login-button-wrapper">
-              <Button variant="outline-primary" onClick={this.onDemo}>
+              <Button
+                variant="outline-primary"
+                onClick={this.onShowCreateUserModal}
+              >
+                Create User
+              </Button>
+            </div>
+            <div className="login-button-wrapper">
+              <Button variant="secondary" onClick={this.redirectHome}>
                 View Demo
               </Button>
             </div>
@@ -39,15 +46,23 @@ class Login extends Component<any, ILoginStates> {
           show={this.state.showLoginModal}
           type={this.state.loginType}
           onClose={this.onCloseLoginModal}
-          onLogin={null}
+          onLogin={this.redirectHome}
         />
       </>
     );
   }
 
+  private onShowCreateUserModal = () => {
+    this.setState({
+      showLoginModal: true,
+      loginType: LoginType.CREATE_USER
+    });
+  };
+
   private onShowLoginModal = () => {
     this.setState({
-      showLoginModal: true
+      showLoginModal: true,
+      loginType: LoginType.LOGIN
     });
   };
 
@@ -57,7 +72,7 @@ class Login extends Component<any, ILoginStates> {
     });
   };
 
-  private onDemo = () => {
+  private redirectHome = () => {
     this.props.history.push("/home");
   };
 }

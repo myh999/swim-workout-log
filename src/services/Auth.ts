@@ -15,30 +15,50 @@ class Auth {
   constructor() {
     firebase.initializeApp(firebaseConfig);
   }
-  public async signIn(email: string, password: string): Promise<boolean> {
+  public async createUser(
+    email: string,
+    password: string
+  ): Promise<string | undefined> {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        localStorage.setItem("email", email);
-        return true;
+        return undefined;
       })
       .catch((err: any) => {
-        console.log(err);
-        return false;
+        return err.message;
       });
   }
 
-  public async signOut(): Promise<boolean> {
+  public async signIn(
+    email: string,
+    password: string
+  ): Promise<string | undefined> {
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        return undefined;
+      })
+      .catch((err: any) => {
+        return err.message;
+      });
+  }
+
+  public async signOut(): Promise<string | undefined> {
     return firebase
       .auth()
       .signOut()
       .then(() => {
-        return true;
+        return undefined;
       })
       .catch(err => {
-        return false;
+        return err.message;
       });
+  }
+
+  public getSignedInUser(): firebase.User | null {
+    return firebase.auth().currentUser;
   }
 }
 
