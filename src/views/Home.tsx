@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import { Button, Container, Row, Form } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Row,
+  Form,
+  Col,
+  ProgressBar
+} from "react-bootstrap";
 import Auth from "../services/Auth";
 import LoginModal from "../containers/LoginModal";
 import { LoginType } from "../constants/enums";
+import Tesseract from "tesseract.js";
 
 interface IHomeStates {
   user?: firebase.User;
   showLoginModal: boolean;
   loginType: LoginType;
+  loadingText?: string;
+  loadingProgress?: number;
+  tesseractText?: string;
 }
 
 class Home extends Component<any, IHomeStates> {
@@ -46,6 +57,7 @@ class Home extends Component<any, IHomeStates> {
               </Button>
             </Form>
           </Row>
+          {this.renderLoadingBar()}
         </Container>
         <LoginModal
           show={this.state.showLoginModal}
@@ -57,9 +69,24 @@ class Home extends Component<any, IHomeStates> {
     );
   }
 
+  private renderLoadingBar = () => {
+    if (this.state.loadingText) {
+      return (
+        <Row>
+          <Col xs="3">{this.state.loadingText}</Col>
+          <Col>
+            <ProgressBar animated now={this.state.loadingProgress} />
+          </Col>
+        </Row>
+      );
+    } else {
+      return <Row>{this.state.tesseractText}</Row>;
+    }
+  };
+
   private onUploadImage = (e: any) => {
     e.preventDefault();
-    console.log(e.currentTarget[0].files[0]);
+    this.getText(e.currentTarget[0].files[0]);
   };
 
   private onLogin = () => {
@@ -87,6 +114,23 @@ class Home extends Component<any, IHomeStates> {
       });
     }
   };
+
+  private getText(image: File) {
+    Tesseract.recognize(image)
+      .progress((p: Tesseract.Progress) => {
+        this.setState({
+          loadingProgress: p.progress*100,
+          loadingText: p.status
+        });
+      })
+      .then((result: Tesseract.Page) => {
+        this.setState({
+          loadingProgress: undefined,
+          loadingText: undefined,
+          tesseractText: result.text
+        });
+      });
+  }
 }
 
 export default Home;
