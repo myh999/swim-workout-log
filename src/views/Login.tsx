@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { LoginType } from "../constants/enums";
 import LoginModal from "../containers/LoginModal";
+import firebase from "firebase";
 
 interface ILoginStates {
   showLoginModal: boolean;
@@ -16,6 +17,14 @@ class Login extends Component<any, ILoginStates> {
       loginType: LoginType.LOGIN
     };
   }
+
+  public componentDidMount = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user !== null) {
+        this.redirectHome();
+      }
+    });
+  };
 
   public render() {
     return (

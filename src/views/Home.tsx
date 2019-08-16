@@ -11,6 +11,7 @@ import Auth from "../services/Auth";
 import LoginModal from "../containers/LoginModal";
 import { LoginType } from "../constants/enums";
 import Tesseract from "tesseract.js";
+import firebase from "firebase";
 
 interface IHomeStates {
   user?: firebase.User;
@@ -19,18 +20,25 @@ interface IHomeStates {
   loadingText?: string;
   loadingProgress?: number;
   tesseractText?: string;
+  fileName?: string;
 }
 
 class Home extends Component<any, IHomeStates> {
   constructor(props: any) {
     super(props);
-    const user: firebase.User | null = Auth.getSignedInUser();
     this.state = {
-      user: user !== null ? user : undefined,
       showLoginModal: false,
       loginType: LoginType.LOGIN
     };
   }
+
+  public componentDidMount = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        user: user !== null ? user : undefined
+      });
+    });
+  };
 
   public render() {
     return (
@@ -50,7 +58,7 @@ class Home extends Component<any, IHomeStates> {
             <Form onSubmit={this.onUploadImage}>
               <Form.Group controlId="uploadImage">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="file" accept="image/*" />
+                <Form.Control type="file" accept=".bmp,.jpg,.png,.pbm" />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Upload File
@@ -58,6 +66,7 @@ class Home extends Component<any, IHomeStates> {
             </Form>
           </Row>
           {this.renderLoadingBar()}
+          <Row>{this.state.fileName}</Row>
         </Container>
         <LoginModal
           show={this.state.showLoginModal}
@@ -86,6 +95,9 @@ class Home extends Component<any, IHomeStates> {
 
   private onUploadImage = (e: any) => {
     e.preventDefault();
+    this.setState({
+      fileName: e.currentTarget[0].files[0].name
+    });
     this.getText(e.currentTarget[0].files[0]);
   };
 
@@ -119,7 +131,7 @@ class Home extends Component<any, IHomeStates> {
     Tesseract.recognize(image)
       .progress((p: Tesseract.Progress) => {
         this.setState({
-          loadingProgress: p.progress*100,
+          loadingProgress: p.progress * 100,
           loadingText: p.status
         });
       })
