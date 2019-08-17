@@ -10,7 +10,6 @@ import {
 import Auth from "../services/Auth";
 import LoginModal from "../containers/LoginModal";
 import { LoginType } from "../constants/enums";
-import Tesseract from "tesseract.js";
 import firebase from "firebase";
 
 interface IHomeStates {
@@ -128,20 +127,7 @@ class Home extends Component<any, IHomeStates> {
   };
 
   private getText(image: File) {
-    Tesseract.recognize(image)
-      .progress((p: Tesseract.Progress) => {
-        this.setState({
-          loadingProgress: p.progress * 100,
-          loadingText: p.status
-        });
-      })
-      .then((result: Tesseract.Page) => {
-        this.setState({
-          loadingProgress: undefined,
-          loadingText: undefined,
-          tesseractText: result.text
-        });
-      });
+    
   }
 }
 
