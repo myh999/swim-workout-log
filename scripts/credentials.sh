@@ -1,0 +1,1 @@
+export GOOGLE_APPLICATION_CREDENTIALS="${PWD}/service-account-file.json"

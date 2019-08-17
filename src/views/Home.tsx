@@ -11,6 +11,7 @@ import Auth from "../services/Auth";
 import LoginModal from "../containers/LoginModal";
 import { LoginType } from "../constants/enums";
 import firebase from "firebase";
+import Vision from "../services/Vision";
 
 interface IHomeStates {
   user?: firebase.User;
@@ -127,7 +128,7 @@ class Home extends Component<any, IHomeStates> {
   };
 
   private getText(image: File) {
-    
+    Vision.getTextFromImage(image);
   }
 }
 
