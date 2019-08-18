@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@google-cloud/vision": "^1.1.4",
     "bootstrap": "^4.3.1",
     "firebase": "^6.3.5",
     "node-sass": "^4.12.0",
