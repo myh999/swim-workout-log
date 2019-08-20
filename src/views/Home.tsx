@@ -128,7 +128,7 @@ class Home extends Component<any, IHomeStates> {
   };
 
   private getText(image: File) {
-    Vision.getTextFromImage(image);
+    console.log(URL.createObjectURL(image));
   }
 }
 
